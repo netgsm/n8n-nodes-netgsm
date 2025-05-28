@@ -10,8 +10,8 @@ export const SMSOperations: INodeProperties[] = [
 			{
 				name: 'SMS Send',
 				value: 'smsSend',
-				description: 'Converts text into speech and returns audio',
-				action: 'Convert text to speech',
+				description: 'Send SMS with API',
+				action: 'Send SMS',
 				routing: {
 					request: {
 						url: '/sms/rest/v2/send',						
@@ -25,8 +25,8 @@ export const SMSOperations: INodeProperties[] = [
 			{
 				name: 'SMS Status Query',
 				value: 'smsStatusQuery',
-				description: 'Transcribe an audio or video file',
-				action: 'Transcribe audio or video',
+				description: 'Query status witj Jobid',
+				action: 'SMS Status Query',
 				routing: {
 					request: {
 						url: '/sms/rest/v2/report',	
@@ -37,8 +37,8 @@ export const SMSOperations: INodeProperties[] = [
 			{
 				name: 'SMS Inbox Query',
 				value: 'smsInboxQuery',
-				description: 'Transform audio from one voice to another',
-				action: 'Change a voice',
+				description: 'SMS Inbox Query',
+				action: 'SMS Inbox Query',
 				routing: {					
 					request: {
 						url: '/sms/rest/v2/inbox',
@@ -144,7 +144,7 @@ export const SMSFields: INodeProperties[] = [
     },    
 ];
 
-export async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
+async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
     const additionalOptions = this.getNodeParameter('additionalOptions', {}) as IDataObject;
     const language = additionalOptions.language as string
 
