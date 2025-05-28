@@ -4,7 +4,7 @@ import { INodeType,
  } from 'n8n-workflow';
 
 import { SMSFields, SMSOperations } from './Descriptions/sms';
-
+import { loadOptions } from './Descriptions/utils';
 
 
 export class Netgsm implements INodeType {
@@ -15,7 +15,7 @@ export class Netgsm implements INodeType {
 		group: ['transform'],
 		version: 1,		
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Send SMS via Netgsm',
+		description: 'Interact with Netgsm API',
 		defaults: {
 			name: 'Netgsm',
 		},
@@ -55,4 +55,7 @@ export class Netgsm implements INodeType {
 		],
 	};
 
+	methods = {
+		loadOptions,
+	};
 }

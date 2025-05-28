@@ -58,9 +58,7 @@ export const SMSOperations: INodeProperties[] = [
 ];
 
 export const SMSFields: INodeProperties[] = [
-	// SMS send
-
-    {
+   {
         displayName: 'Phone Number',
         name: 'phone',
         type: 'string',
@@ -144,11 +142,10 @@ export const SMSFields: INodeProperties[] = [
 			},
 		},        
     },    
-
 ];
 
 async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
-    const additionalOptions = this.getNodeParameter('additionalOptions', {}) as IDataObject;
+    const additionalOptions = this.getNodeParameter('additionalOptions') as IDataObject;
     const language = additionalOptions.language as string
 
     const messages: { no: string; msg: string }[] = [];

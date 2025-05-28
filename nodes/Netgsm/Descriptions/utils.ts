@@ -1,4 +1,4 @@
-import { ILoadOptionsFunctions, INodeListSearchItems, INodeListSearchResult } from "n8n-workflow";
+import { ILoadOptionsFunctions, INodePropertyOptions } from "n8n-workflow";
 
 interface INetgsmHeaderResponse {
   headers: {
@@ -8,8 +8,9 @@ interface INetgsmHeaderResponse {
   };
 }
 
-export const listheaders = {
-	async listHeaders(this: ILoadOptionsFunctions): Promise<INodeListSearchResult> {
+
+export const loadOptions = {
+	async listHeaders(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 		const headerResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'netgsmApi', {
 			method: 'GET',
 			url: 'https://api.netgsm.com.tr/sms/rest/v2/msgheader',
@@ -17,15 +18,13 @@ export const listheaders = {
 
         
 
-		const returnData: INodeListSearchItems[] = headerResponse.headers.msgheaders.map(
+		const returnData: INodePropertyOptions[] = headerResponse.headers.msgheaders.map(
 			(smsheaders) => ({
 				name: "Header",
 				value: smsheaders,
 			})
 		);
 
-		return {
-			results: returnData,
-		};
+		return returnData;
 	},
 };
