@@ -144,7 +144,7 @@ export const SMSFields: INodeProperties[] = [
     },    
 ];
 
-async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
+export async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
     const additionalOptions = this.getNodeParameter('additionalOptions', {}) as IDataObject;
     const language = additionalOptions.language as string
 
