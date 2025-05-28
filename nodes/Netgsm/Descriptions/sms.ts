@@ -145,8 +145,8 @@ export const SMSFields: INodeProperties[] = [
 ];
 
 async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
-    const additionalOptions = this.getNodeParameter('additionalOptions') as IDataObject;
-    const language = additionalOptions.language as string
+    // const additionalOptions = this.getNodeParameter('additionalOptions') as IDataObject;
+    // const language = additionalOptions.language as string
 
     const messages: { no: string; msg: string }[] = [];
         
@@ -171,9 +171,9 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
         appname: 'n8n-integration'        
     };    
     
-    if(language){
-        body.encoding = language;
-    }
+    // if(language){
+    //     body.encoding = language;
+    // }
 
     requestOptions.body = body;
 	return requestOptions;
