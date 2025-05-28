@@ -1,8 +1,6 @@
-# n8n-nodes-_node-name_
+# n8n-nodes-netgsm
 
-This is an n8n community node. It lets you use _app/service name_ in your n8n workflows.
-
-_App/service name_ is _one or two sentences describing the service this node integrates with_.
+This is the official Netgsm n8n community node. This node integrates with the SMS Gateway to send messages directly from n8n workflows.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
@@ -40,7 +38,7 @@ This node has been tested with n8n 1.94.0
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* [Netgsm Documentation] (https://www.netgsm.com.tr/dokuman)
+* [Netgsm Documentation](https://www.netgsm.com.tr/dokuman)
 
 ## Version history
 
