@@ -10,8 +10,8 @@ export const SMSOperations: INodeProperties[] = [
 			{
 				name: 'SMS Send',
 				value: 'smsSend',
-				description: 'Send SMS with API',
-				action: 'Send SMS',
+                description: 'Send a text message to a phone number',
+                action: 'Send a text message',
 				routing: {
 					request: {
 						url: '/sms/rest/v2/send',						
@@ -25,8 +25,8 @@ export const SMSOperations: INodeProperties[] = [
 			{
 				name: 'SMS Status Query',
 				value: 'smsStatusQuery',
-				description: 'Query status witj Jobid',
-				action: 'SMS Status Query',
+                description: 'Check delivery status of a sent SMS using Job ID',
+                action: 'Check SMS status',
 				routing: {
 					request: {
 						url: '/sms/rest/v2/report',	
@@ -37,8 +37,8 @@ export const SMSOperations: INodeProperties[] = [
 			{
 				name: 'SMS Inbox Query',
 				value: 'smsInboxQuery',
-				description: 'SMS Inbox Query',
-				action: 'SMS Inbox Query',
+                description: 'Retrieve received SMS messages from inbox',
+                action: 'Get inbox messages',
 				routing: {					
 					request: {
 						url: '/sms/rest/v2/inbox',
