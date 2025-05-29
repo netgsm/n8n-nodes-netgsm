@@ -4,7 +4,7 @@ import { INodeType,
  } from 'n8n-workflow';
 
 import { SMSFields, SMSOperations } from './Descriptions/sms';
-import { loadOptions } from './Descriptions/utils';
+import { listSearch } from './Descriptions/utils';
 
 
 export class Netgsm implements INodeType {
@@ -56,6 +56,6 @@ export class Netgsm implements INodeType {
 	};
 
 	methods = {
-		loadOptions,
+		listSearch,
 	};
 }

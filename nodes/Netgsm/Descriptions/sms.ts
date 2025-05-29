@@ -88,18 +88,26 @@ export const SMSFields: INodeProperties[] = [
 	{
         displayName: 'Message Header',
         name: 'msgheader',
-		type: 'options',
-        required: true,
-		default: '',        
+		type: 'resourceLocator',
+		default: { mode: 'list', value: null },
 		displayOptions: {
 			show: {
 				resource: ['sms'],
 				operation: ['smsSend'],
 			},
 		},
-        typeOptions: {
-            loadOptionsMethod: 'listHeaders',
-        },		
+		modes: [
+			{
+				displayName: 'From list',
+				name: 'list',
+				type: 'list',
+				typeOptions: {
+					searchListMethod: 'listHeaders',
+					searchable: true,
+				},
+			}			
+		],
+		required: true,
 	},
 	{
 		displayName: 'Additional Options',
