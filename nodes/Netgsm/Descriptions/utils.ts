@@ -18,7 +18,7 @@ export const listSearch = {
         console.log('API Response:', response);
         const headerResponse = response as INetgsmHeaderResponse;
 		if (!headerResponse.msgheaders || !Array.isArray(headerResponse.msgheaders)) {
-			throw new Error('Unexpected response format from Netgsm API');
+			throw new Error('Unexpected response format from Netgsm API s ' + JSON.stringify(response));
 		}
 
 		const returnData: INodeListSearchItems[] = headerResponse.msgheaders.map(

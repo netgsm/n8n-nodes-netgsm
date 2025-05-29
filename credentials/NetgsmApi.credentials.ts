@@ -3,6 +3,9 @@ import type {
 	INodeProperties,    
 	IAuthenticateGeneric,
 	ICredentialTestRequest,
+	IHttpRequestHelper,
+	ICredentialDataDecryptedObject,
+	IDataObject,
 } from 'n8n-workflow';
 
 export class NetgsmApi implements ICredentialType {
@@ -36,7 +39,7 @@ export class NetgsmApi implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
-				'Authorization': 'Basic ={Buffer.from(`${credentials.username}:${credentials.password}`).toString("base64")}',
+				'Authorization': '={{$auth.authorization}}',
 			},
 		},
 	};
@@ -44,8 +47,22 @@ export class NetgsmApi implements ICredentialType {
 	test: ICredentialTestRequest | undefined = {
 		request: {
 			baseURL: 'https://api.netgsm.com.tr/sms/rest/v2',
-			url: '/inbox',
+			url: '/msgheader',
 		},
 	};
+
+
+	async preAuthentication(
+		this: IHttpRequestHelper,
+		credentials: ICredentialDataDecryptedObject,
+	): Promise<IDataObject> {
+		const { username, password } = credentials;
+		const authString = `${username}:${password}`;
+		const encoded = Buffer.from(authString).toString('base64');
+
+		return {
+			authorization: `Basic ${encoded}`,
+		};
+	}
 
 }
