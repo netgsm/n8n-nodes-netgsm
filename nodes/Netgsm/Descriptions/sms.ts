@@ -85,20 +85,30 @@ export const SMSFields: INodeProperties[] = [
 			},
 		},                
     },
-    {
+	{
         displayName: 'Message Header',
         name: 'msgheader',
-        type: 'string',
-        default: '',
-        required: true,
+		type: 'resourceLocator',
+		default: { mode: 'list', value: null },
 		displayOptions: {
 			show: {
 				resource: ['sms'],
 				operation: ['smsSend'],
 			},
-		},                
-    },
-
+		},
+		modes: [
+			{
+				displayName: 'From list',
+				name: 'list',
+				type: 'list',
+				typeOptions: {
+					searchListMethod: 'listHeaders',
+					searchable: true,
+				},
+			}			
+		],
+		required: true,
+	},
 	{
 		displayName: 'Additional Options',
 		name: 'additionalOptions',
@@ -113,17 +123,47 @@ export const SMSFields: INodeProperties[] = [
 		},  
 		options: [
             {
-                displayName: 'Message Context Coding',
+                displayName: 'Message Encoding',
                 name: 'language',
-                type: 'string',
-                default: 'TR',                
-                displayOptions: {
-                    show: {
-                        resource: ['sms'],
-                        operation: ['smsSend'],
-                    },
-                },                
+                type: 'options',
+                default: 'TR',          
+                options: [
+					{
+						name: 'Turkish Encoding',
+						value: '11',
+						description: 'No Translate Turkish Characters',
+					},
+					{
+						name: 'GSM Encoding',
+						value: '0',
+						description: 'Translate Turkish Characters to Latin',
+					},                    
+                ],
             },
+            {
+                displayName: 'IYS Check Mode',
+                name: 'iys',
+                type: 'options',
+                default: '0',          
+                options: [
+					{
+						name: 'Bireysel',
+						value: '11',
+						description: 'Bireysel Kontrol',
+					},
+					{
+						name: 'Tacir',
+						value: '12',
+						description: 'Tacir Kontrol',
+					},                    
+                ],   
+            },            
+            {
+                displayName: 'Partner Code',
+                name: 'partnercode',
+                type: 'string',
+                default: '',          
+            },             
         ],
     },        
 
