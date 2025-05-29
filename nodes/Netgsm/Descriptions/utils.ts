@@ -11,16 +11,19 @@ interface INetgsmHeaderResponse {
 
 export const listSearch = {
 	async listHeaders(this: ILoadOptionsFunctions): Promise<INodeListSearchResult> {
-		const headerResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'netgsmApi', {
+		const response = await this.helpers.httpRequestWithAuthentication.call(this, 'netgsmApi', {
 			method: 'GET',
 			url: 'https://api.netgsm.com.tr/sms/rest/v2/msgheader',
-		}) as INetgsmHeaderResponse;
-
-        console.log(headerResponse);
+		});
+        console.log('API Response:', response);
+        const headerResponse = response as INetgsmHeaderResponse;
+		if (!headerResponse.msgheaders || !Array.isArray(headerResponse.msgheaders)) {
+			throw new Error('Unexpected response format from Netgsm API');
+		}
 
 		const returnData: INodeListSearchItems[] = headerResponse.msgheaders.map(
 			(smsheaders) => ({
-				name: "Header",
+				name: smsheaders,
 				value: smsheaders,
 			})
 		);
