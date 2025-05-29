@@ -33,13 +33,31 @@ export class NetgsmApi implements ICredentialType {
 			default: '',
 			required: true,
 		},
+		{
+			displayName: 'Session Token',
+			name: 'sessionToken',
+			type: 'hidden',
+			default: '',
+		},		
 	];	
 	
+	async preAuthentication(
+		this: IHttpRequestHelper,
+		credentials: ICredentialDataDecryptedObject,
+	): Promise<IDataObject> {
+		const username = credentials.username as string;
+		const password = credentials.password as string;
+		const authString = `${username}:${password}`;
+		const encoded = Buffer.from(authString).toString('base64');		
+		credentials.sessionToken = encoded;
+		return { sessionToken: encoded };
+	}
+
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
 			headers: {
-				'Authorization': '={{$auth.authorization}}',
+				Authorization: '=Basic {{$credentials.sessionToken}}',
 			},
 		},
 	};
@@ -50,19 +68,5 @@ export class NetgsmApi implements ICredentialType {
 			url: '/msgheader',
 		},
 	};
-
-
-	async preAuthentication(
-		this: IHttpRequestHelper,
-		credentials: ICredentialDataDecryptedObject,
-	): Promise<IDataObject> {
-		const { username, password } = credentials;
-		const authString = `${username}:${password}`;
-		const encoded = Buffer.from(authString).toString('base64');
-
-		return {
-			authorization: `Basic ${encoded}`,
-		};
-	}
 
 }
