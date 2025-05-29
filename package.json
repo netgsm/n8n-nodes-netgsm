@@ -1,6 +1,6 @@
 {
   "name": "@netgsm/n8n-nodes-netgsm",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Official Netgsm node for n8n",
   "keywords": [
     "n8n-community-node-package",
