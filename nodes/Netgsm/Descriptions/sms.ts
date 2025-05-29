@@ -88,26 +88,18 @@ export const SMSFields: INodeProperties[] = [
 	{
         displayName: 'Message Header',
         name: 'msgheader',
-		type: 'resourceLocator',
-		default: { mode: 'list', value: null },
+		type: 'options',
+        required: true,
+		default: '',        
 		displayOptions: {
 			show: {
 				resource: ['sms'],
 				operation: ['smsSend'],
 			},
 		},
-		modes: [
-			{
-				displayName: 'From list',
-				name: 'list',
-				type: 'list',
-				typeOptions: {
-					searchListMethod: 'listHeaders',
-					searchable: true,
-				},
-			}			
-		],
-		required: true,
+        typeOptions: {
+            loadOptionsMethod: 'listHeaders',
+        },		
 	},
 	{
 		displayName: 'Additional Options',
@@ -126,7 +118,7 @@ export const SMSFields: INodeProperties[] = [
                 displayName: 'Message Encoding',
                 name: 'language',
                 type: 'options',
-                default: 'TR',          
+                default: '11',          
                 options: [
 					{
 						name: 'Turkish Encoding',
@@ -156,6 +148,11 @@ export const SMSFields: INodeProperties[] = [
 						value: '12',
 						description: 'Tacir Kontrol',
 					},                    
+					{
+						name: 'Bilgilendirme',
+						value: '0',
+						description: 'Kontrolsüz',
+					},                     
                 ],   
             },            
             {
