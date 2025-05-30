@@ -33,8 +33,14 @@ export const SMSOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						url: '/sms/rest/v2/report',	
-						returnFullResponse: true,                        					
-					},
+						returnFullResponse: true, 
+                        json: true,
+                        encoding: "json",                                                                       
+					},            
+					send: {
+                        type: "body",
+						preSend: [ reportRequest ],
+					}, 
 				},
 			},
 			{
@@ -150,19 +156,19 @@ export const SMSFields: INodeProperties[] = [
                 default: '0',          
                 options: [
 					{
-						name: 'Bireysel',
+						name: 'Bussiness to Customer',
 						value: '11',
-						description: 'Bireysel Kontrol',
+						description: 'Commercial content to individuals (B2C)',
 					},
 					{
-						name: 'Tacir',
+						name: 'Bussiness to Bussiness',
 						value: '12',
-						description: 'Tacir Kontrol',
+						description: 'Commercial content to businesses (B2B)',
 					},                    
 					{
-						name: 'Bilgilendirme',
+						name: 'Informational message',
 						value: '0',
-						description: 'Kontrolsüz',
+						description: 'Informational messages that are not subject to IYS checks',
 					},                     
                 ],   
             },            
@@ -171,7 +177,19 @@ export const SMSFields: INodeProperties[] = [
                 name: 'partnercode',
                 type: 'string',
                 default: '',          
-            },             
+            },      
+            {
+                displayName: 'SMS Send Datetime',
+                name: 'startdate',
+                type: "dateTime",
+                default: '',          
+            },
+            {
+                displayName: 'SMS Valid Until',
+                name: 'stopdate',
+                type: "dateTime",
+                default: '',          
+            },            
         ],
     },        
 
@@ -194,7 +212,11 @@ export const SMSFields: INodeProperties[] = [
 
 async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
     const additionalOptions = this.getNodeParameter('additionalOptions', {}) as IDataObject;
-    const language = additionalOptions.language as string
+    const language = additionalOptions.language as string;
+    const partnercode = additionalOptions.partnercode as string;
+    const iysmode = additionalOptions.iys as string;
+    const startdate = additionalOptions.startdate as string;
+    const stopdate = additionalOptions.stopdate as string;
 
     const messages: { no: string; msg: string }[] = [];
         
@@ -224,7 +246,36 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
         smsjson.encoding = language;
     }
 
+    if(partnercode){
+        smsjson.partnercode = partnercode;
+    }
+
+    if(iysmode){
+        smsjson.iysfilter = iysmode;
+    }
+
+    if(startdate){
+        smsjson.startdate = startdate;
+    }
+
+    if(stopdate){
+        smsjson.stopdate = stopdate;
+    }    
+
     requestOptions.body = JSON.stringify(smsjson);    
 	return requestOptions;
 }
 
+async function reportRequest( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
+    const jobid = this.getNodeParameter('jobid') as string;
+    const jobids: string[] = [jobid];
+    let reportjson:  {        
+        jobids: any;
+        appname: string;   
+    } = {        
+        jobids: jobids,
+        appname: 'n8n-integration'
+    };    
+    requestOptions.body = JSON.stringify(reportjson);    
+	return requestOptions;
+}
