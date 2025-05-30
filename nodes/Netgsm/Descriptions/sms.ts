@@ -15,9 +15,12 @@ export const SMSOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						url: '/sms/rest/v2/send',						
-						returnFullResponse: true,                        
-					},
+						returnFullResponse: true, 
+                        json: true,
+                        encoding: "json",                                                                       
+					},            
 					send: {
+                        type: "body",
 						preSend: [ sendSMS ],
 					}, 
 				},
@@ -58,7 +61,31 @@ export const SMSOperations: INodeProperties[] = [
 ];
 
 export const SMSFields: INodeProperties[] = [
-   {
+	{
+        displayName: 'Message Header',
+        name: 'msgheader',
+		type: 'resourceLocator',
+		default: { mode: 'list', value: null },
+		displayOptions: {
+			show: {
+				resource: ['sms'],
+				operation: ['smsSend'],
+			},
+		},
+		modes: [
+			{
+				displayName: 'From list',
+				name: 'list',
+				type: 'list',
+				typeOptions: {
+					searchListMethod: 'listHeaders',
+					searchable: true,
+				},
+			}			
+		],
+		required: true,
+	},    
+    {
         displayName: 'Phone Number',
         name: 'phone',
         type: 'string',
@@ -85,30 +112,6 @@ export const SMSFields: INodeProperties[] = [
 			},
 		},                
     },
-	{
-        displayName: 'Message Header',
-        name: 'msgheader',
-		type: 'resourceLocator',
-		default: { mode: 'list', value: null },
-		displayOptions: {
-			show: {
-				resource: ['sms'],
-				operation: ['smsSend'],
-			},
-		},
-		modes: [
-			{
-				displayName: 'From list',
-				name: 'list',
-				type: 'list',
-				typeOptions: {
-					searchListMethod: 'listHeaders',
-					searchable: true,
-				},
-			}			
-		],
-		required: true,
-	},
 	{
 		displayName: 'Additional Options',
 		name: 'additionalOptions',
@@ -201,7 +204,7 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
     const header = this.getNodeParameter('msgheader') as string;			
     
 
-    let body:  {
+    let smsjson:  {
         msgheader: string;
         messages: any;
         appname: string;
@@ -217,10 +220,10 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
     };    
     
     if(language){
-        body.encoding = language;
+        smsjson.encoding = language;
     }
 
-    requestOptions.body = body;
+    requestOptions.body = JSON.stringify(smsjson);    
 	return requestOptions;
 }
 
