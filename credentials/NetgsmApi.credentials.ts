@@ -38,6 +38,9 @@ export class NetgsmApi implements ICredentialType {
 			name: 'sessionToken',
 			type: 'hidden',
 			default: '',
+			typeOptions: {
+				expirable: true,
+			},			
 		},		
 	];	
 	
@@ -48,8 +51,7 @@ export class NetgsmApi implements ICredentialType {
 		const username = credentials.username as string;
 		const password = credentials.password as string;
 		const authString = `${username}:${password}`;
-		const encoded = Buffer.from(authString).toString('base64');		
-		credentials.sessionToken = encoded;
+		const encoded = Buffer.from(authString).toString('base64');	
 		return { sessionToken: encoded };
 	}
 
@@ -58,14 +60,14 @@ export class NetgsmApi implements ICredentialType {
 		properties: {
 			headers: {
 				Authorization: '=Basic {{$credentials.sessionToken}}',
-			},
+			},			
 		},
 	};
 
 	test: ICredentialTestRequest | undefined = {
 		request: {
 			baseURL: 'https://api.netgsm.com.tr/sms/rest/v2',
-			url: '/msgheader',
+			url: '/msgheader',			
 		},
 	};
 

@@ -14,11 +14,10 @@ export const listSearch = {
 		const response = await this.helpers.httpRequestWithAuthentication.call(this, 'netgsmApi', {
 			method: 'GET',
 			url: 'https://api.netgsm.com.tr/sms/rest/v2/msgheader',
-		});
-        console.log('API Response:', response);
+		});        
         const headerResponse = response as INetgsmHeaderResponse;
 		if (!headerResponse.msgheaders || !Array.isArray(headerResponse.msgheaders)) {
-			throw new Error('Unexpected response format from Netgsm API s ' + JSON.stringify(response));
+			throw new Error('Unexpected response format from Netgsm API');
 		}
 
 		const returnData: INodeListSearchItems[] = headerResponse.msgheaders.map(

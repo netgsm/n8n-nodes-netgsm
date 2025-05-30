@@ -34,6 +34,7 @@ export class Netgsm implements INodeType {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			json: true,
 		},		
 		properties: [
 			{
