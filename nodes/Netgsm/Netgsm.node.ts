@@ -30,7 +30,7 @@ export class Netgsm implements INodeType {
 		],
 		requestDefaults: {
 			method: 'POST',
-			baseURL: 'http://api.netgsm.com.tr',
+			baseURL: 'https://api.netgsm.com.tr',
 			headers: {
 				'Content-Type': 'application/json',
 			},

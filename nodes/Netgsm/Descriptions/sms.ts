@@ -201,7 +201,8 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
     const phone = this.getNodeParameter('phone') as string;
     const message = this.getNodeParameter('message') as string;
     messages.push({ no: phone, msg: message });
-    const header = this.getNodeParameter('msgheader') as string;			
+    const headerobject = this.getNodeParameter('msgheader') as IDataObject;			
+    const header = headerobject.value as string;		
     
 
     let smsjson:  {
