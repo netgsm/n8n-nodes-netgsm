@@ -132,24 +132,6 @@ export const SMSFields: INodeProperties[] = [
 		},  
 		options: [
             {
-                displayName: 'Message Encoding',
-                name: 'language',
-                type: 'options',
-                default: '11',          
-                options: [
-					{
-						name: 'Turkish Encoding',
-						value: '11',
-						description: 'No Translate Turkish Characters',
-					},
-					{
-						name: 'GSM Encoding',
-						value: '0',
-						description: 'Translate Turkish Characters to Latin',
-					},                    
-                ],
-            },
-            {
                 displayName: 'IYS Check Mode',
                 name: 'iys',
                 type: 'options',
@@ -166,12 +148,30 @@ export const SMSFields: INodeProperties[] = [
 						description: 'Commercial content to businesses (B2B)',
 					},                    
 					{
-						name: 'Informational message',
+						name: 'Message Text Is Informational',
 						value: '0',
 						description: 'Informational messages that are not subject to IYS checks',
 					},                     
                 ],   
-            },            
+            },             
+            {
+                displayName: 'Message Encoding',
+                name: 'language',
+                type: 'options',
+                default: '11',          
+                options: [
+					{
+						name: 'Turkish Encoding',
+						value: '11',
+						description: 'No Translate Turkish Characters',
+					},
+					{
+						name: 'GSM Encoding',
+						value: '0',
+						description: 'Translate Turkish Characters',
+					},                    
+                ],
+            },                       
             {
                 displayName: 'Partner Code',
                 name: 'partnercode',
@@ -210,13 +210,26 @@ export const SMSFields: INodeProperties[] = [
     },    
 ];
 
+async function convertTimestamp(date:Date){
+        // ddMMyyyyHHmm
+        const formatted =
+        String(date.getDate()).padStart(2, '0') +
+        String(date.getMonth() + 1).padStart(2, '0') +
+        date.getFullYear() +
+        String(date.getHours()).padStart(2, '0') +
+        String(date.getMinutes()).padStart(2, '0');    
+        return formatted;
+}
+
 async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
     const additionalOptions = this.getNodeParameter('additionalOptions', {}) as IDataObject;
     const language = additionalOptions.language as string;
     const partnercode = additionalOptions.partnercode as string;
     const iysmode = additionalOptions.iys as string;
-    const startdate = additionalOptions.startdate as string;
-    const stopdate = additionalOptions.stopdate as string;
+    const optStartDate = additionalOptions.startdate as Date;
+    const optStopDate = additionalOptions.stopdate as Date;
+    const startdate = await convertTimestamp(optStartDate);
+    const stopdate = await convertTimestamp(optStopDate);
 
     const messages: { no: string; msg: string }[] = [];
         
