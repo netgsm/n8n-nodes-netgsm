@@ -11,7 +11,7 @@ export const IYSOperations: INodeProperties[] = [
 				name: 'Add IYS Address',
 				value: 'iysAdd',
                 description: 'This service is used to add a phone number or email address to IYS',
-                action: 'Add Phone Number or Email',
+                action: 'Add phone number or email',
 				routing: {
 					request: {
 						url: '/iys/add',						
@@ -46,17 +46,17 @@ export const IYSFields: INodeProperties[] = [
             {
                 name: 'Message',
                 value: 'MESAJ',
-                description: 'The channel through which the recipient has consented to receive messages (SMS).'
+                description: 'The channel through which the recipient has consented to receive messages (SMS)'
             },
             {
                 name: 'Email',
                 value: 'EPOSTA',
-                description: 'The channel through which the recipient has consented to receive emails.'
+                description: 'The channel through which the recipient has consented to receive emails'
             },
             {
                 name: 'Call',
                 value: 'ARAMA',
-                description: 'The channel through which the recipient has consented to receive phone calls.'
+                description: 'The channel through which the recipient has consented to receive phone calls'
             }
         ],
         required: true,
@@ -73,72 +73,72 @@ export const IYSFields: INodeProperties[] = [
         type: 'options',
         default: 'HS_WEB',          
        options: [
-                {
-                    name: 'Physical Environment',
-                    value: 'HS_FIZIKSEL_ORTAM',
-                    description: 'Consent was given through a physical environment (e.g., store, branch).'
-                },
-                {
-                    name: 'Wet Signature',
-                    value: 'HS_ISLAK_IMZA',
-                    description: 'Consent was given via a wet-ink signature on a physical document.'
-                },
-                {
-                    name: 'Website',
-                    value: 'HS_WEB',
-                    description: 'Consent was obtained through a website or online form.'
-                },
-                {
-                    name: 'Call Center',
-                    value: 'HS_CAGRI_MERKEZI',
-                    description: 'Consent was obtained through a call center interaction.'
-                },
-                {
-                    name: 'Social Media',
-                    value: 'HS_SOSYAL_MEDYA',
-                    description: 'Consent was given via social media platforms.'
-                },
-                {
-                    name: 'Email',
-                    value: 'HS_EPOSTA',
-                    description: 'Consent was provided through an email communication.'
-                },
-                {
-                    name: 'SMS',
-                    value: 'HS_MESAJ',
-                    description: 'Consent was given via SMS message.'
-                },
-                {
-                    name: 'Mobile Application',
-                    value: 'HS_MOBIL',
-                    description: 'Consent was provided through a mobile app.'
-                },
-                {
-                    name: 'Electronic Environment',
-                    value: 'HS_EORTAM',
-                    description: 'Consent was obtained via an electronic environment (general digital medium).'
-                },
-                {
-                    name: 'Event',
-                    value: 'HS_ETKINLIK',
-                    description: 'Consent was collected during an event (e.g., fair, seminar, promo).'
-                },
-                {
-                    name: 'Prior to 2015',
-                    value: 'HS_2015',
-                    description: 'Consent was granted before the year 2015.'
-                },
-                {
-                    name: 'ATM',
-                    value: 'HS_ATM',
-                    description: 'Consent was provided through an ATM interface.'
-                },
-                {
-                    name: 'Legal Decision',
-                    value: 'HS_KARAR',
-                    description: 'Consent status was determined by a legal or administrative decision.'
-                }
-            ],  
+            {
+                name: 'ATM',
+                value: 'HS_ATM',
+                description: 'Consent was provided through an ATM interface'
+            },
+            {
+                name: 'Call Center',
+                value: 'HS_CAGRI_MERKEZI',
+                description: 'Consent was obtained through a call center interaction'
+            },
+            {
+                name: 'Electronic Environment',
+                value: 'HS_EORTAM',
+                description: 'Consent was obtained via an electronic environment (general digital medium)'
+            },
+            {
+                name: 'Email',
+                value: 'HS_EPOSTA',
+                description: 'Consent was provided through an email communication'
+            },
+            {
+                name: 'Event',
+                value: 'HS_ETKINLIK',
+                description: 'Consent was collected during an event (e.g., fair, seminar, promo)'
+            },
+            {
+                name: 'Legal Decision',
+                value: 'HS_KARAR',
+                description: 'Consent status was determined by a legal or administrative decision'
+            },
+            {
+                name: 'Mobile Application',
+                value: 'HS_MOBIL',
+                description: 'Consent was provided through a mobile app'
+            },
+            {
+                name: 'Physical Environment',
+                value: 'HS_FIZIKSEL_ORTAM',
+                description: 'Consent was given through a physical environment (e.g., store, branch)'
+            },
+            {
+                name: 'Prior to 2015',
+                value: 'HS_2015',
+                description: 'Consent was granted before the year 2015'
+            },
+            {
+                name: 'SMS',
+                value: 'HS_MESAJ',
+                description: 'Consent was given via SMS message'
+            },
+            {
+                name: 'Social Media',
+                value: 'HS_SOSYAL_MEDYA',
+                description: 'Consent was given via social media platforms'
+            },
+            {
+                name: 'Website',
+                value: 'HS_WEB',
+                description: 'Consent was obtained through a website or online form'
+            },
+            {
+                name: 'Wet Signature',
+                value: 'HS_ISLAK_IMZA',
+                description: 'Consent was given via a wet-ink signature on a physical document'
+            }
+        ],
         required: true,
 		displayOptions: {
 			show: {
@@ -170,12 +170,12 @@ export const IYSFields: INodeProperties[] = [
             {
                 name: 'Consent Given',
                 value: 'ONAY',
-                description: 'The recipient has given consent to be contacted through the specified channel.'
+                description: 'The recipient has given consent to be contacted through the specified channel'
             },
             {
                 name: 'Consent Rejected',
                 value: 'RET',
-                description: 'The recipient has rejected or withdrawn consent to be contacted through the specified channel.'
+                description: 'The recipient has rejected or withdrawn consent to be contacted through the specified channel'
             }
         ],  
         required: true,
@@ -208,12 +208,12 @@ export const IYSFields: INodeProperties[] = [
             {
                 name: 'Individual',
                 value: 'BIREYSEL',
-                description: 'The consent was obtained for individual (personal) communication purposes.'
+                description: 'The consent was obtained for individual (personal) communication purposes'
             },
             {
                 name: 'Business',
                 value: 'TACIR',
-                description: 'The consent was obtained for commercial or business-related communication purposes.'
+                description: 'The consent was obtained for commercial or business-related communication purposes'
             }
         ],          
         required: true,
@@ -321,7 +321,7 @@ async function addIYS( this: IExecuteSingleFunctions, requestOptions: IHttpReque
 		password: string;
 		brandCode: string;		
 	}>('netgsmApi');
-    	
+
     const username = credentials.username as string;
     const password = credentials.password as string;
     const brandCode = credentials.brandCode as string;    

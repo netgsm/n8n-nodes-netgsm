@@ -4,6 +4,7 @@ import { INodeType,
  } from 'n8n-workflow';
 
 import { SMSFields, SMSOperations } from './Descriptions/sms';
+import { IYSFields, IYSOperations } from './Descriptions/iys';
 import { listSearch } from './Descriptions/utils';
 
 
@@ -44,18 +45,22 @@ export class Netgsm implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'SMS',
-						value: 'sms',
-					},
-					{
-						name: 'IYS',
+						name: 'ILETI YONETIM SISTEMI',
 						value: 'iys',
 					},					
+					{
+						name: 'SMS',
+						value: 'sms',
+					},				
 				],
 				default: 'sms',
 			},
+			//SMS
 			...SMSOperations,
 			...SMSFields,
+			//IYS
+            ...IYSOperations,
+            ...IYSFields,			
 
 		],
 	};
