@@ -47,6 +47,10 @@ export class Netgsm implements INodeType {
 						name: 'SMS',
 						value: 'sms',
 					},
+					{
+						name: 'IYS',
+						value: 'iys',
+					},					
 				],
 				default: 'sms',
 			},
