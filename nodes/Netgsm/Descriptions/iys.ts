@@ -80,7 +80,7 @@ export const IYSFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['iys'],
-				operation: ['iysAdd','queryIYS'],
+				operation: ['iysAdd','iysQuery'],
 			},
 		},          
     },  
@@ -174,13 +174,13 @@ export const IYSFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['iys'],
-				operation: ['iysAdd','queryIYS'],
+				operation: ['iysAdd','iysQuery'],
 			},
 		},               
     },
     {
         displayName: 'Status',
-        name: 'type',
+        name: 'status',
         type: 'options',
         default: 'ONAY',          
         options: [
@@ -237,7 +237,7 @@ export const IYSFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['iys'],
-				operation: ['iysAdd','queryIYS'],
+				operation: ['iysAdd','iysQuery'],
 			},
 		},          
     },        

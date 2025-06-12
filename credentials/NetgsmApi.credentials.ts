@@ -57,7 +57,7 @@ export class NetgsmApi implements ICredentialType {
 			required: true,
 			displayOptions: {
 				show: {
-					authType: ['iysauth'],
+					authService: ['iysauth'],
 				},
 			},			
 		},		
