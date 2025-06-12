@@ -17,6 +17,22 @@ export class NetgsmApi implements ICredentialType {
 
 	properties: INodeProperties[] = [
 		{
+			displayName: 'Auth Service',
+			name: 'authService',
+			type: 'options',
+			default: 'smsAuth',
+			options: [
+				{
+					name: 'SMS API',
+					value: 'smsAuth',
+				},
+				{
+					name: 'IYS API',
+					value: 'iysauth',
+				},
+			],
+		},		
+		{
 			displayName: 'Netgsm API Username',
 			name: 'username',
 			type: 'string',
@@ -33,6 +49,18 @@ export class NetgsmApi implements ICredentialType {
 			default: '',
 			required: true,
 		},
+		{
+			displayName: 'IYS Brand Code',
+			name: 'brandCode',
+			type: 'string',
+			default: '',
+			required: true,
+			displayOptions: {
+				show: {
+					authType: ['iysauth'],
+				},
+			},			
+		},		
 		{
 			displayName: 'Session Token',
 			name: 'sessionToken',
@@ -67,7 +95,7 @@ export class NetgsmApi implements ICredentialType {
 	test: ICredentialTestRequest | undefined = {
 		request: {
 			baseURL: 'https://api.netgsm.com.tr/sms/rest/v2',
-			url: '/msgheader',			
+			url: '/msgheader',						
 		},
 	};
 

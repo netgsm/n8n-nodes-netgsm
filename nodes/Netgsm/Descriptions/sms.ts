@@ -158,16 +158,16 @@ export const SMSFields: INodeProperties[] = [
                 displayName: 'Message Encoding',
                 name: 'language',
                 type: 'options',
-                default: '11',          
+                default: 'TR',          
                 options: [
 					{
 						name: 'Turkish Encoding',
-						value: '11',
+						value: 'TR',
 						description: 'No Translate Turkish Characters',
 					},
 					{
 						name: 'GSM Encoding',
-						value: '0',
+						value: '',
 						description: 'Translate Turkish Characters',
 					},                    
                 ],
