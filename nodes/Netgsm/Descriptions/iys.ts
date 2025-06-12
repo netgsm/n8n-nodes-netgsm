@@ -25,7 +25,24 @@ export const IYSOperations: INodeProperties[] = [
 					}, 
 				},
 			},
-			
+			{
+				name: 'Query IYS Address',
+				value: 'iysQuery',
+                description: 'This service is used to add a phone number or email address to IYS',
+                action: 'Query phone number or email',
+				routing: {
+					request: {
+						url: '/iys/search',						
+						returnFullResponse: true, 
+                        json: true,
+                        encoding: "json",                                                                       
+					},            
+					send: {
+                        type: "body",
+						preSend: [ queryIYS ],
+					}, 
+				},
+			},			
 		],
 		default: 'iysAdd',
 		displayOptions: {
@@ -63,7 +80,7 @@ export const IYSFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['iys'],
-				operation: ['iysAdd'],
+				operation: ['iysAdd','queryIYS'],
 			},
 		},          
     },  
@@ -157,7 +174,7 @@ export const IYSFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['iys'],
-				operation: ['iysAdd'],
+				operation: ['iysAdd','queryIYS'],
 			},
 		},               
     },
@@ -220,7 +237,7 @@ export const IYSFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['iys'],
-				operation: ['iysAdd'],
+				operation: ['iysAdd','queryIYS'],
 			},
 		},          
     },        
@@ -297,9 +314,7 @@ async function addIYS( this: IExecuteSingleFunctions, requestOptions: IHttpReque
         appkey?: string;
     } = { type: type, source: source, recipient: recipient, status: status,  consentDate: consentDate, recipientType: recipientType};
     
-    const body: typeof bodyItem[] = [];
-
-
+    const body: {data: typeof bodyItem[]} = {data:[]};
 
     if(retailerCode){
         bodyItem.retailerCode = retailerCode;
@@ -313,9 +328,40 @@ async function addIYS( this: IExecuteSingleFunctions, requestOptions: IHttpReque
         bodyItem.appkey = appkey;
     }
 
-    body.push(bodyItem);
+    body.data.push(bodyItem);
 
-	const credentials = await this.getCredentials<{
+    const header= await getHeader(this);
+
+    if(refid){
+        header.refid = refid;
+    }
+
+    const iysjson = {header: header, body: body};
+
+    requestOptions.body = JSON.stringify(iysjson);    
+	return requestOptions;
+}
+
+async function queryIYS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
+    const typeO = this.getNodeParameter('type') as IDataObject;
+    const type = typeO.value as string;    
+    const recipientTypeO = this.getNodeParameter('recipientType') as IDataObject;    
+    const recipientType = recipientTypeO.value as string;
+    const recipient = this.getNodeParameter('recipient') as string;
+    const header= await getHeader(this);
+    const bodyItem:{
+        type: string;         
+        recipient: string;
+        recipientType: string;        
+    } = { type: type, recipient: recipient, recipientType: recipientType};    
+    const body: {data: typeof bodyItem[]} = {data:[]};
+    const iysjson = {header: header, body: body};
+    requestOptions.body = JSON.stringify(iysjson);    
+	return requestOptions;    
+}    
+
+async function getHeader(fn: IExecuteSingleFunctions)  {
+	const credentials = await fn.getCredentials<{
 		username: string;
 		authService: 'smsAuth' | 'iysAuth';
 		password: string;
@@ -333,12 +379,5 @@ async function addIYS( this: IExecuteSingleFunctions, requestOptions: IHttpReque
         refid?: string;
     } = { username: username, password: password, brandCode: brandCode};
 
-    if(refid){
-        header.refid = refid;
-    }
-
-    const iysjson = {header: header, body: body};
-
-    requestOptions.body = JSON.stringify(iysjson);    
-	return requestOptions;
+    return header;    
 }

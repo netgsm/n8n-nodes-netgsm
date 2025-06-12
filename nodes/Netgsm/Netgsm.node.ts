@@ -45,13 +45,13 @@ export class Netgsm implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'ILETI YONETIM SISTEMI',
-						value: 'iys',
-					},					
-					{
 						name: 'SMS',
 						value: 'sms',
-					},				
+					},						
+					{
+						name: 'ILETI YONETIM SISTEMI',
+						value: 'iys',
+					},								
 				],
 				default: 'sms',
 			},
