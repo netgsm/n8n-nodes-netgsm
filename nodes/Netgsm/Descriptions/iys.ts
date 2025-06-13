@@ -291,23 +291,20 @@ async function addIYS( this: IExecuteSingleFunctions, requestOptions: IHttpReque
     const retailerAccess = additionalOptions.retailerAccess as string;
     const appkey = additionalOptions.appkey as string;        
         
-    const typeO = this.getNodeParameter('type') as IDataObject;
-    const type = typeO.value as string;
-    const sourceO = this.getNodeParameter('source') as IDataObject;    
-    const source = sourceO.value as string;
+    const type = this.getNodeParameter('type') as string;    
+    const source = this.getNodeParameter('source') as string;        
     const recipient = this.getNodeParameter('recipient') as string;			    
-    const statusO = this.getNodeParameter('status') as IDataObject;    
-    const status = statusO.value as string;    
-    const recipientTypeO = this.getNodeParameter('recipientType') as IDataObject;    
-    const recipientType = recipientTypeO.value as string;
-    const consentDate = this.getNodeParameter('consentDate') as Date;	       
+    const status = this.getNodeParameter('status') as string;        
+    const recipientType = this.getNodeParameter('recipientType') as string;        
+    let consentDate = this.getNodeParameter('consentDate') as string;	       
+    consentDate = await formatDateSimple(consentDate);
 
     const bodyItem:{
         type: string; 
         source: string; 
         recipient: string;
         status: string;
-        consentDate: Date;
+        consentDate: string;
         recipientType: string;        
         retailerCode?: string;
         retailerAccess?: string;
@@ -343,10 +340,8 @@ async function addIYS( this: IExecuteSingleFunctions, requestOptions: IHttpReque
 }
 
 async function queryIYS( this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions ): Promise<IHttpRequestOptions> {
-    const typeO = this.getNodeParameter('type') as IDataObject;
-    const type = typeO.value as string;    
-    const recipientTypeO = this.getNodeParameter('recipientType') as IDataObject;    
-    const recipientType = recipientTypeO.value as string;
+    const type = this.getNodeParameter('type') as string;    
+    const recipientType = this.getNodeParameter('recipientType') as string;        
     const recipient = this.getNodeParameter('recipient') as string;
     const header= await getHeader(this);
     const bodyItem:{
@@ -380,4 +375,8 @@ async function getHeader(fn: IExecuteSingleFunctions)  {
     } = { username: username, password: password, brandCode: brandCode};
 
     return header;    
+}
+
+async function formatDateSimple(input:string) {
+  return input.replace('T', ' ');
 }
