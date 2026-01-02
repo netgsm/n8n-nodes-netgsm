@@ -5,6 +5,7 @@ import {
 	INodeType,
 	INodeTypeDescription,
 	NodeConnectionType,
+	NodeOperationError,
 } from 'n8n-workflow';
 
 export class NetgsmTrigger implements INodeType {
@@ -42,7 +43,7 @@ export class NetgsmTrigger implements INodeType {
 				type: 'options',
 				options: [
 					{
-						name: 'incoming SMS',
+						name: 'Incoming SMS',
 						value: 'incomingSms',
 						description: 'Trigger when an SMS is received',
 					},
@@ -83,7 +84,7 @@ export class NetgsmTrigger implements INodeType {
 					});
 					return true;
 				} catch (error) {
-					throw new Error(`Failed to register webhook: ${error.message}`);
+					throw new NodeOperationError(this.getNode(), `Failed to register webhook: ${error.message}`);
 				}
 			},
 			async delete(this: IHookFunctions): Promise<boolean> {
