@@ -227,9 +227,7 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
     const partnercode = additionalOptions.partnercode as string;
     const iysmode = additionalOptions.iys as string;
     const optStartDate = additionalOptions.startdate as Date;
-    const optStopDate = additionalOptions.stopdate as Date;
-    const startdate = await convertTimestamp(optStartDate);
-    const stopdate = await convertTimestamp(optStopDate);
+    const optStopDate = additionalOptions.stopdate as Date;       
 
     const messages: { no: string; msg: string }[] = [];
         
@@ -267,11 +265,13 @@ async function sendSMS( this: IExecuteSingleFunctions, requestOptions: IHttpRequ
         smsjson.iysfilter = iysmode;
     }
 
-    if(startdate){
+    if(optStartDate){
+        const startdate = await convertTimestamp(optStartDate);
         smsjson.startdate = startdate;
     }
 
-    if(stopdate){
+    if(optStopDate){
+        const stopdate = await convertTimestamp(optStopDate);
         smsjson.stopdate = stopdate;
     }    
 
